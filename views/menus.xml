@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--        1.请假系统主菜单-->
+        <menuitem id="menu_leave" name="请假系统"/>
+        <!--        2.1请假表单动作-->
+        <record id="action_leave_leave" model="ir.actions.act_window">
+            <field name="name">请假表单act</field>
+            <field name="res_model">leave.leave</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="target">current</field>
+        </record>
+
+        <!--        2.2加班表单动作-->
+        <record id="action_leave_overtime" model="ir.actions.act_window">
+            <field name="name">加班表单act</field>
+            <field name="res_model">leave.overtime</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <!--        2.3权限配置表单动作-->
+        <record id="action_leave_security" model="ir.actions.act_window">
+            <field name="name">权限配置</field>
+            <field name="res_model">res.users</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <!--        2.4部门表单动作-->
+        <record id="action_leave_department" model="ir.actions.act_window">
+            <field name="name">部门信息表</field>
+            <field name="res_model">leave.department</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <!--        2.5审核岗动作-->
+        <record id="action_leave_exam" model="ir.actions.act_window">
+            <field name="name">审核人员信息表</field>
+            <field name="res_model">leave.exam</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <!--    graph视图显示定义-->
+        <record model="ir.ui.view" id="leave_graph_view">
+            <field name="name">leave.graph</field>
+            <field name="model">leave.leave</field>
+            <field name="arch" type="xml">
+                <graph string="请假人数统计" stacked="True">
+                    <field name="department" type="row"/>
+                    <field name="name" type="row"/>
+                    <field name="start_time" interval="day"/>
+                    <field name="leave_day" type="measure"/>
+                    <field name="count_name" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <!--                请假表单服务器动作-审批通过-->
+        <record id="leave_action_accept" model="ir.actions.server">
+            <field name="name">审批通过</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="binding_model_id" ref="model_leave_leave"/>
+            <field name="state">code</field>
+            <field name="code">records.button_pass()</field>
+        </record>
+        <!--                请假表单服务器动作-拒绝/驳回-->
+        <record id="leave_action_reject" model="ir.actions.server">
+            <field name="name">拒绝/驳回</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="binding_model_id" ref="model_leave_leave"/>
+            <field name="state">code</field>
+            <field name="code">records.button_fail()</field>
+        </record>
+
+        <!--                加班表单服务器动作-审批通过-->
+        <record id="overtime_action_accept" model="ir.actions.server">
+            <field name="name">审批通过</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="binding_model_id" ref="model_leave_overtime"/>
+            <field name="state">code</field>
+            <field name="code">records.button_pass()</field>
+        </record>
+        <!--                加班表单服务器动作-拒绝/驳回-->
+        <record id="overtime_action_reject" model="ir.actions.server">
+            <field name="name">拒绝/驳回</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="binding_model_id" ref="model_leave_overtime"/>
+            <field name="state">code</field>
+            <field name="code">records.button_fail()</field>
+        </record>
+        <!--        3.1请假表单-->
+        <menuitem action="action_leave_leave" id="submenu_leave_leave" name="请假表单" parent="menu_leave"
+                  sequence="10"/>
+        <!--        3.2加班表单-->
+        <menuitem action="action_leave_overtime" id="submenu_leave_overtime" name="加班表单" parent="menu_leave"
+                  sequence="20"/>
+        <!--        3.4部门信息-->
+        <menuitem action="action_leave_department" id="submenu_leave_department" name="部门信息" parent="menu_leave"
+                  sequence="25" groups="group_manager,group_hr,group_exam_manager"/>
+        <!--        3.3权限配置-->
+        <menuitem action="action_leave_security" id="submenu_leave_security" name="权限配置" parent="menu_leave"
+                  sequence="30" groups="group_manager,group_hr"/>
+<!--        &lt;!&ndash;        3.3审核人员&ndash;&gt;-->
+<!--        <menuitem action="action_leave_exam" id="submenu_leave_exam" name="审核人员表" parent="menu_leave"-->
+<!--                  sequence="30" groups="group_manager,group_hr,group_exam_manager"/>-->
+    </data>
+</odoo>

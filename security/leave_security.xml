@@ -1,0 +1,41 @@
+<odoo>
+    <data noupdate="0">
+        <record id="module_category_leave" model="ir.module.category">
+            <field name="name">请假系统</field>
+        </record>
+
+        <record id="group_staff" model="res.groups">
+            <field name="name">员工</field>
+            <field name="category_id" ref="module_category_leave"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_department_manager" model="res.groups">
+            <field name="name">部门经理</field>
+            <field name="category_id" ref="module_category_leave"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('leave.group_staff'))]"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+        <record id="group_exam_manager" model="res.groups">
+            <field name="name">审批岗</field>
+            <field name="category_id" ref="module_category_leave"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('leave.group_department_manager'))]"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_hr" model="res.groups">
+            <field name="name">人力岗</field>
+            <field name="category_id" ref="module_category_leave"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('leave.group_department_manager'))]"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+
+        <record id="group_manager" model="res.groups">
+            <field name="name">管理员</field>
+            <field name="implied_ids" eval="[(4,ref('base.group_user')),(4,ref('leave.group_hr'))]"/>
+            <field name="category_id" ref="module_category_leave"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>

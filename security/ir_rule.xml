@@ -1,0 +1,107 @@
+<odoo>
+
+    <data noupdate="0">
+        <!--        一、员工-->
+        <record id="leave_leave_staff_rule" model="ir.rule">
+            <field name="name">请假员工-记录规则</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('group_staff'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="leave_overtime_staff_rule" model="ir.rule">
+            <field name="name">加班员工-记录规则</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('group_staff'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <!--        二、部门经理-->
+        <record id="leave_leave_department_manager_rule" model="ir.rule">
+            <field name="name">部门经理请假-记录规则</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="domain_force">[('department','=', user.department.name)]</field>
+            <field name="groups" eval="[(4,ref('group_department_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="leave_overtime_department_manager_rule" model="ir.rule">
+            <field name="name">部门经理加班-记录规则</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="domain_force">[('department','=',user.department.name)]</field>
+            <field name="groups" eval="[(4,ref('group_department_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--        二、部门经理-->
+        <record id="leave_leave_exam_manager_rule" model="ir.rule">
+            <field name="name">部门经理请假-记录规则</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="groups" eval="[(4,ref('group_exam_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="leave_overtime_exam_manager_rule" model="ir.rule">
+            <field name="name">部门经理加班-记录规则</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="groups" eval="[(4,ref('group_exam_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--三、人力岗-->
+        <record id="leave_leave_hr_rule" model="ir.rule">
+            <field name="name">人力岗请假-记录规则</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="groups" eval="[(4,ref('group_hr'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="leave_overtime_hr_rule" model="ir.rule">
+            <field name="name">人力岗加班-记录规则</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="groups" eval="[(4,ref('group_hr'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--        四、管理员-->
+        <record id="leave_leave_manager_rule" model="ir.rule">
+            <field name="name">管理员请假-记录规则</field>
+            <field name="model_id" ref="model_leave_leave"/>
+            <field name="groups" eval="[(4,ref('group_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="leave_overtime_manager_rule" model="ir.rule">
+            <field name="name">管理员加班-记录规则</field>
+            <field name="model_id" ref="model_leave_overtime"/>
+            <field name="groups" eval="[(4,ref('group_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

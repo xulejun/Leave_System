@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--        1.1请假表单右侧显示tree视图-->
+        <record id="leave_leave_tree" model="ir.ui.view">
+            <field name="name">请假表单tree</field>
+            <field name="model">leave.leave</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="LeaveTree">
+                    <field name="name"/>
+                    <field name="department"/>
+                    <field name="start_time"/>
+                    <field name="stop_time"/>
+                    <field name="state"/>
+                    <field name="leave_type"/>
+                    <field name="leave_day" sum="请假总天数"/>
+                    <field name="count_name" sum="请假总人数"/>
+                </tree>
+            </field>
+        </record>
+        <!--        1.2请假表单创建form视图-->
+        <record id="leave_leave_form" model="ir.ui.view">
+            <field name="name">请假表单form</field>
+            <field name="model">leave.leave</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="LeaveForm">
+                    <header>
+                        <button name="button_submit" states="draft" string="提交" type="object" class="oe_highlight"/>
+                        <button name="button_pass" states="confirm" string="批准" type="object" class="oe_highlight"
+                        groups="leave.group_department_manager,leave.group_hr,leave.group_manager"/>
+                        <button name="button_fail" states="confirm" string="拒绝" type="object" class="oe_highlight"
+                        groups="leave.group_department_manager,leave.group_hr,leave.group_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,reject,complete"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" string="请假单详情">
+                            <group>
+                                <field name="name"/>
+                                <field name="leave_day"/>
+                                <field name="start_time"/>
+                                <field name="stop_time"/>
+                                <field name="rest"/>
+                            </group>
+                            <group>
+                                <field name="department"/>
+                                <field name="leave_type"/>
+                                <field name="start_am_pm"/>
+                                <field name="stop_am_pm"/>
+                                <field name="year_rest"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="原因">
+                                <field name="leave_reason"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--        2.1加班表单右侧显示tree视图-->
+        <record id="leave_overtime_tree" model="ir.ui.view">
+            <field name="name">加班表单act</field>
+            <field name="model">leave.overtime</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="OvertimeTree">
+                    <field name="name"/>
+                    <field name="department"/>
+                    <field name="start_time"/>
+                    <field name="stop_time"/>
+                    <field name="state"/>
+                    <field name="over_reason"/>
+                    <field name="over_day"/>
+                </tree>
+            </field>
+        </record>
+        <!--        2.2加班表单创建Form视图-->
+        <record id="leave_overtime_form" model="ir.ui.view">
+            <field name="name">请假表单form</field>
+            <field name="model">leave.overtime</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="OvertimeForm">
+                    <header>
+                        <button name="button_submit" states="draft" string="提交" type="object" class="oe_highlight"/>
+                        <button name="button_pass" states="confirm" string="批准" type="object" class="oe_highlight"
+                        groups="leave.group_department_manager,leave.group_hr,leave.group_manager"/>
+                        <button name="button_fail" states="confirm" string="拒绝" type="object" class="oe_highlight"
+                        groups="leave.group_department_manager,leave.group_hr,leave.group_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,reject,complete"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" string="加班单详情">
+                            <group>
+                                <field name="name"/>
+                                <field name="start_time"/>
+                                <field name="stop_time"/>
+                                <field name="over_day"/>
+                            </group>
+                            <group>
+                                <field name="department"/>
+                                <field name="start_am_pm"/>
+                                <field name="stop_am_pm"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="原因">
+                                <field name="over_reason"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--        3.1部门信息表单右侧显示tree视图-->
+        <record id="leave_department_tree" model="ir.ui.view">
+            <field name="name">部门信息tree</field>
+            <field name="model">leave.department</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="部门信息Tree" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <!--        3.2审核人员右侧显示tree视图-->
+        <record id="leave_exam_tree" model="ir.ui.view">
+            <field name="name">审核人员表</field>
+            <field name="model">leave.exam</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="审核人员Tree" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <!--        请假表单搜索视图-->
+        <record model="ir.ui.view" id="leave_search_view">
+            <field name="name">搜索视图</field>
+            <field name="model">leave.leave</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="leave_day"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                    <filter name="state_complete" string="审批通过" domain="[('state', '=', 'complete')]"/>
+                    <filter name="state_reject" string="人力资源部不通过" domain="[('state', '=', 'reject')]"/>
+                    <filter name="state_confirm" string="待人力资源部审批" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="state_draft" string="草稿" domain="[('state', '=', 'draft')]"/>
+                    <group string="Group By">
+                        <filter name="state" string="按审核进度分组" context="{'group_by': 'state'}"/>
+                    </group>
+                    <filter name="state_complete_two" string="已完成" domain="[('state', '=', 'complete')]"/>
+                </search>
+            </field>
+        </record>
+<!--        向res.users模型添加字段-->
+        <record id="building_list_view" model="ir.ui.view">
+            <field name="name">building.list.view</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="(//page[@name='access_rights'])" position="before">
+                    <page string="请假系统">
+                        <group>
+                            <field name="name"/>
+                            <field name="department"/>
+                        </group>
+                        <group>
+                            <field name="user_year_rest"/>
+                            <field name="user_rest"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
